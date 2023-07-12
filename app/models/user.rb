@@ -4,32 +4,36 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :timelines
-  after_create :create_referral_code, :hit_referral
+  after_create :create_referral_code, :check_points
 
   def create_referral_code
     code = email.split('@').first
     update(joining_referral_code: code)
   end
 
-  def hit_referral
-    debugger
-    code = referral_code
-    return if code.blank?
+  def check_points
+    prev_user = previous_user
+    return if prev_user.nil?
 
-    prev_user = User.find_by(joining_referral_code: code)
-    if prev_user.timelines
-      p 'he'
-      user = timelines.first.user
-      point = user.points
-      points += 5
-      user.update(points:)
-      points = prev_user.points
-      points += 10
-      prev_user.update(points:)
+    time_lines = Timeline.where(prev_user:)
+    if time_lines.length >= 1
+      update_points(prev_user, 10)
+      update_points(self, 5)
+      update_points(time_lines.last.child_user, 5)
+      time_lines.destroy_all
     else
-      prev_user.timelines.create!(timeline: 'another_user', user_id: id)
+      Timeline.create!(prev_user:, child_user: self)
     end
   end
-end
-# User.create!("referral_code"=>"user01", "name"=>"user04", "email"=>"user01@example.com", "password"=>"welcome", "password_confirmation"=>"welcome")
 
+  def update_points(user, value)
+    points = user.points
+    points += value
+    user.update(points:)
+  end
+
+  def previous_user
+    User.find_by(joining_referral_code: referral_code)
+  end
+  # User.create!("referral_code"=>"user01", "name"=>"user04", "email"=>"user01@example.com", "password"=>"welcome", "password_confirmation"=>"welcome")
+end
