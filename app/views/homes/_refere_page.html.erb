@@ -1,0 +1,24 @@
+<div>
+<h3>Want to refer to your friend ?</h3>
+<p>
+
+<%= form_for(:shares, as: :shares, url: share_path) do |f| %>
+
+  <div class="field">
+    <%= f.label :Referral_code %>:</tr>
+    <%= f.label current_user.joining_referral_code %><br />
+  </div>
+    <br/>
+  <div class="field">
+    <%= f.label :Name %>:</tr>
+    <%= f.label current_user.name %><br />
+  </div>
+
+  <div class="field">
+    <%= f.label :Refer_through_email %>:
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Others email" %> <%= f.submit "Share joining link" %>
+
+  </div>
+<% end %>
+</p>
+</div>

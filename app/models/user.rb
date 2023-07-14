@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   def create_referral_code
     code = email.split('@').first
+    value = id * 2
+    code = "#{value}_#{code}_#{rand(value)}"
     update(joining_referral_code: code)
   end
 
@@ -27,6 +29,7 @@ class User < ApplicationRecord
   end
 
   def update_points(user, value)
+    ReferralMailer.refer_through_email(user).deliver_now
     points = user.points
     points += value
     user.update(points:)

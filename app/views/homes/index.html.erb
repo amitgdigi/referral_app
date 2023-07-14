@@ -7,6 +7,8 @@
 <p>Email: <%= current_user.email %></p>
 <p>Points: <%= current_user.points %></p>
 <p>Referral Code: <%= current_user.joining_referral_code %></p>
+<%# <%= render partial: 'homes/refere_page' %> 
+
 <% else %>
   <%= button_to "Sign up", new_user_registration_path %> 
   <%= button_to "Sign in", new_user_session_path %> 
