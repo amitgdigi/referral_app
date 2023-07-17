@@ -2,13 +2,13 @@
 <p>Find me in app/views/homes/index.html.erb</p>
 
 <% if user_signed_in? %>
- <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+ <%= button_to "Sign out", destroy_user_session_path, method: :delete %> </tr>
 <p>Name: <%= current_user.name %></p>
 <p>Email: <%= current_user.email %></p>
 <p>Points: <%= current_user.points %></p>
 <p>Referral Code: <%= current_user.joining_referral_code %></p>
-<%# <%= render partial: 'homes/refere_page' %> 
-
+<%= link_to 'Refer', shares_path, class: 'btn btn-primary', data: { toggle: 'modal' } %>
+<div class="open-pop-up"></div>
 <% else %>
   <%= button_to "Sign up", new_user_registration_path %> 
   <%= button_to "Sign in", new_user_session_path %> 

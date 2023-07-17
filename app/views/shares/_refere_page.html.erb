@@ -1,0 +1,27 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%# <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Popup Title</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> %>
+      <div class="modal-body">
+        <p>
+        <%= form_with(url: shares_path, method: "post") do |f| %>
+        
+          <div class="field">
+            <%= f.label :Refer_to_friend %>:
+            <%= f.email_field :email, autofocus: true, placeholder: "Others email" %> <%= f.submit "Share joining link" %>
+          </div>
+        <% end %>
+        </p>
+      </div>
+      <div class="modal-footer">
+      <%= link_to 'Back to Home', root_path %>
+        <%# <button type="button" class="btn btn-default" data-dismiss="modal">Home</button> %>
+      </div>
+    </div>
+  </div>
+</div>

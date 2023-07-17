@@ -1,24 +1,34 @@
-<div>
-<h3>Want to refer to your friend ?</h3>
-<p>
-
-<%= form_for(:shares, as: :shares, url: share_path) do |f| %>
-
-  <div class="field">
-    <%= f.label :Referral_code %>:</tr>
-    <%= f.label current_user.joining_referral_code %><br />
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Popup Title</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+        <%= form_with( url: shares_path, method: "post") do |f| %>
+          <div class="field">
+            <%= f.label :Referral_code %>:</tr>
+            <%= f.label current_user.joining_referral_code %><br />
+          </div>
+            <br/>
+          <div class="field">
+            <%= f.label :Name %>:</tr>
+            <%= f.label current_user.name %><br />
+          </div>
+          <div class="field">
+            <%= f.label :Refer_through_email %>:
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Others email" %> <%= f.submit "Share joining link" %>
+          </div>
+        <% end %>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
-    <br/>
-  <div class="field">
-    <%= f.label :Name %>:</tr>
-    <%= f.label current_user.name %><br />
-  </div>
-
-  <div class="field">
-    <%= f.label :Refer_through_email %>:
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Others email" %> <%= f.submit "Share joining link" %>
-
-  </div>
-<% end %>
-</p>
 </div>

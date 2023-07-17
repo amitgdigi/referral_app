@@ -5,15 +5,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    p @code = params[:code]
+    p @email = params[:email]
+    super
+  end
 
   # POST /resource
   def create
-    code = user_params[:referral_code]
-    if code.present?
-      pre_user = User.find_by(joining_referral_code: code)
+    if @code.present?
+      pre_user = User.find_by(joining_referral_code: @code)
       if pre_user.nil?
         flash[:error] = 'Invalid referral code, Please try again'
         redirect_to(new_user_registration_path) and return
